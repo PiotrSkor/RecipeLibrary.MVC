@@ -6,24 +6,24 @@
     <div class="col-md-4">
         <form action="/Recipe/Create" method="post">
             <div class="form-group mb-3">
-                <label class="control-label" asp-for="RecipeName">Recipe Name</label>
-                <input class="form-control" type="text" asp-for="RecipeName" placeholder="Pizza" />
+                <label class="control-label" for="RecipeName">Recipe Name</label>
+                <input class="form-control" type="text" id="RecipeName" name="RecipeName" placeholder="Pizza" />
             </div>
             <div class="form-group mb-3">
-                <label class="control-label" asp-for="RecipeDescriptionShort">Description</label>
-                <input class="form-control" type="text" asp-for="RecipeDescriptionShort" placeholder="Delicious pizza for whole family" />
+                <label class="control-label" for="RecipeDescriptionShort">Description</label>
+                <input class="form-control" type="text" id="RecipeDescriptionShort" name="RecipeDescriptionShort" placeholder="Delicious pizza for whole family" />
             </div>
             <div class="form-group mb-3">
-                <label class="control-label" asp-for="Ingredients">Ingredients</label>
-                <input class="form-control" type="text" asp-for="Ingredients" placeholder="Flour - 100g, Water - 200ml" />
+                <label class="control-label" for="Ingredients">Ingredients</label>
+                <input class="form-control" type="text" id="Ingredients" name="Ingredients" placeholder="Flour - 100g, Water - 200ml" />
             </div>
             <div class="form-group mb-3">
-                <label class="control-label" asp-for="IngredientsValue">Ingredients value</label>
-                <input class="form-control" type="text" asp-for="IngredientsValue" placeholder="Flour - 100g, Water - 200ml" />
+                <label class="control-label" for="IngredientsValue">Ingredients value</label>
+                <input class="form-control" type="text" id="IngredientsValue" name="IngredientsValue" placeholder="Flour - 100g, Water - 200ml" />
             </div>
             <div class="form-group mb-3">
-                <label class="control-label" asp-for="RecipeDescriptionLong">How to do it</label>
-                <input class="form-control" type="text" asp-for="RecipeDescriptionLong" placeholder="Flour and salt mix..." />
+                <label class="control-label" for="RecipeDescriptionLong">How to do it</label>
+                <input class="form-control" type="text" id="RecipeDescriptionLong" name="RecipeDescriptionLong" placeholder="Flour and salt mix..." />
             </div>
             <div class="form-group mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" />

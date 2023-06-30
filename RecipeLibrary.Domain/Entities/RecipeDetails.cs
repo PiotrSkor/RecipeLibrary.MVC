@@ -16,7 +16,7 @@ namespace RecipeLibrary.Domain.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string EncodedName { get; set; } = default!;
 
-        public void EncodingName() => RecipeName = RecipeName.ToLower().Replace(" ", "-");
+        public void EncodingName() => EncodedName = RecipeName.ToLower().Replace(" ", "-");
 
     }
 }
