@@ -7,7 +7,11 @@ namespace RecipeLibrary.MVC.Controllers
         [HttpPost]
         public IActionResult Create(Domain.Entities.RecipeDetails recipeDetails)
         {
-            RecipeLibrary.Application.Services.RecipeLibraryServices.Create(recipeDetails);
+            if (ModelState.IsValid)
+            {
+                return View(recipeDetails);
+            }
+            Application.Services.RecipeLibraryServices.Create(recipeDetails);
             return RedirectToAction(nameof(Create));
         }
         [HttpGet]
