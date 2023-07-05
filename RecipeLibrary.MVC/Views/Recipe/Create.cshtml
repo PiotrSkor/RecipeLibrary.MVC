@@ -14,20 +14,9 @@
                 <label class="control-label" asp-for="DescriptionShort">Description</label>
                 <input class="form-control" type="text" asp-for="DescriptionShort" placeholder="Delicious pizza for whole family" />
                 <span asp-validation-for="DescriptionShort" class="text-danger"></span>
-            </div> 
-            <div class="form-group mb-3" id="inputContainer">
-                <label class="control-label" asp-for="IngredientName">Ingredients value</label>
-                <input class="form-control" type="text" asp-for="IngredientName" placeholder="Flour" />
             </div>
             <div>
-                <button class="btn btn-success" id="addButton">+</button>
-            </div>
-            <div class="form-group mb-3" id="inputContainer2">
-                <label class="control-label" asp-for="IngredientValue">Ingredients value</label>
-                <input class="form-control" type="text" asp-for="IngredientValue" placeholder="100g" />
-            </div>
-            <div>
-                <button class="btn btn-success" id="addButton2">+</button>
+                @Html.Partial("_Create")
             </div>
             <div class="form-group mb-3" >
                 <label class="control-label" asp-for="DescriptionLong">How to do it</label>
@@ -40,28 +29,6 @@
     </div>
 </div>
 
-
-<script>
-    var addButton = document.getElementById('addButton');
-    var inputContainer = document.getElementById('inputContainer');
-
-    addButton.addEventListener('click', function () {
-        var inputElement = inputContainer.querySelector('input');
-        var clonedInput = inputElement.cloneNode(true);
-        inputContainer.appendChild(clonedInput);
-    });
-</script>
-<script>
-    var addButton2 = document.getElementById('addButton2');
-    var inputContainer2 = document.getElementById('inputContainer2');
-
-    addButton2.addEventListener('click', function () {
-        var inputElement = inputContainer2.querySelector('input');
-        var clonedInput = inputElement.cloneNode(true);
-        inputContainer2.appendChild(clonedInput);
-    });
-
-</script>    
 
 
 

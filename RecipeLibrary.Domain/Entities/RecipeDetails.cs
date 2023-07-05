@@ -15,9 +15,8 @@ namespace RecipeLibrary.Domain.Entities
 
         [StringLength(50, MinimumLength = 10, ErrorMessage = "Description should be beetwen 10 and 50 letters.")]
         public string? DescriptionShort { get; set; }
-        public string Ingredients { get; set; } = default!;
-        public List<string> IngredientsValue { get; set; } = new List<string>();
-        public List<string> DescriptionLong { get; set; } = new List<string>();
+        public string? DescriptionLong { get; set; }
+        public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string EncodedName { get; set; } = default!;
 
