@@ -1,0 +1,68 @@
+﻿@using RecipeLibrary.Domain.Entities
+@model Ingredient
+
+<div class="form-group mb-3" id="inputContainer">
+    <label class="control-label" asp-for="NameIng">Ingredients value</label>
+    <input class="form-control" type="text" asp-for="NameIng" placeholder="Flour" />
+</div>
+<div>
+    <button class="btn btn-success" id="addButton">+</button>
+</div>
+<div class="form-group mb-3" id="inputContainer2">
+    <label class="control-label" asp-for="Value">Ingredients value</label>
+    <input class="form-control" type="text" asp-for="Value" placeholder="100g" />
+</div>
+<div>
+    <button class="btn btn-success" id="addButton2">+</button>
+</div>
+<div class="form-group mb-3" id="inputContainer3">
+    <label class="control-label" asp-for="Type">Ingredients value</label>
+    <input class="form-control" type="text" asp-for="Type" placeholder="Spoon" />
+</div>
+<div>
+    <button class="btn btn-success" id="addButton3">+</button>
+</div>
+
+
+<script>
+    var addButton = document.getElementById('addButton');
+    var inputContainer = document.getElementById('inputContainer');
+
+
+    addButton.addEventListener('click', function () {
+        var inputElement = inputContainer.querySelector('input');
+        var clonedInput = inputElement.cloneNode(true);
+        inputContainer.appendChild(clonedInput);
+    });
+
+</script>
+<script>
+
+    var addButton2 = document.getElementById('addButton2');
+    var inputContainer2 = document.getElementById('inputContainer2');
+
+    addButton2.addEventListener('click', function () {
+        var inputElement = inputContainer2.querySelector('input');
+        var clonedInput = inputElement.cloneNode(true);
+        inputContainer2.appendChild(clonedInput);
+    });
+
+</script>
+<script>
+
+    var addButton3 = document.getElementById('addButton3');
+    var inputContainer3 = document.getElementById('inputContainer3');
+
+    addButton3.addEventListener('click', function () {
+        var inputElement = inputContainer3.querySelector('input');
+        var clonedInput = inputElement.cloneNode(true);
+        inputContainer3.appendChild(clonedInput);
+    });
+
+</script>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
