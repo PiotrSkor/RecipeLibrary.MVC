@@ -3,7 +3,7 @@
 
 <h1>Add recipe</h1>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col">
         <form action="/Recipe/Create" method="post">
             <div class="form-group mb-3">
                 <label class="control-label" asp-for="Name">Recipe Name</label>
@@ -15,12 +15,35 @@
                 <input class="form-control" type="text" asp-for="DescriptionShort" placeholder="Delicious pizza for whole family" />
                 <span asp-validation-for="DescriptionShort" class="text-danger"></span>
             </div>
-            <div>
-                @Html.Partial("_Create")
-            </div>
-            <div class="form-group mb-3" >
+            <div class="form-group mb-3">
                 <label class="control-label" asp-for="DescriptionLong">How to do it</label>
                 <input class="form-control" type="text" asp-for="DescriptionLong" placeholder="Flour and salt mix..." />
+            </div>
+            <h3>INGREDIENTS</h3>
+            <span class="btn btn-success addIng">Add another ing</span>
+            <div id="inputFields">
+            @for (int i = 0; i < Model.Ingredients.Count; i++)
+            {
+                <div class="row" id="addButton">
+                    <div class="form-group mb-3 col-5" id="inputContainer">
+                        <label class="control-label" asp-for="@Model.Ingredients[i].NameIng">Name</label>
+                        <input class="form-control" type="text" asp-for="@Model.Ingredients[i].NameIng" placeholder="Flour" />
+                    </div>
+                    <div class="form-group mb-3 col-3" id="inputContainer">
+                        <label class="control-label" asp-for="@Model.Ingredients[i].Value">Value</label>
+                        <input class="form-control" type="text" asp-for="@Model.Ingredients[i].Value" placeholder="Flour" />
+                    </div>
+                    <div class="form-group col-2">
+                        <select class="form-select mt-4" id="exampleSelect1" asp-for="@Model.Ingredients[i].Type">
+                            <option>Gram</option>
+                            <option>Kg</option>
+                            <option>liter</option>
+                            <option>Spoon</option>
+                            <option>Pinch</option>
+                        </select>
+                    </div>
+                </div>
+            }
             </div>
             <div class="form-group mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -30,9 +53,38 @@
 </div>
 
 
-
-
 @section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.addIng').click(function () {
+                var inputCount = $('#inputFields').children().length;
+                var newInputField = `
+                        <div class="row" id="addButton">
+                            <div class="form-group mb-3 col-5" id="inputContainer">
+                                <label class="control-label" asp-for="Ingredients[${inputCount}].NameIng">Name</label>
+                                <input class="form-control" type="text" asp-for="Ingredients[${inputCount}].NameIng" placeholder="Flour" />
+                            </div>
+                            <div class="form-group mb-3 col-3" id="inputContainer">
+                                <label class="control-label" asp-for="Ingredients[${inputCount}].Value">Value</label>
+                                <input class="form-control" type="text" asp-for="Ingredients[${inputCount}].Value" placeholder="Flour" />
+                            </div>
+                            <div class="form-group col-2">
+                                <select class="form-select mt-4" id="exampleSelect1" asp-for="Ingredients[${inputCount}].Type">
+                                    <option>Gram</option>
+                                    <option>Kg</option>
+                                    <option>liter</option>
+                                    <option>Spoon</option>
+                                    <option>Pinch</option>
+                                </select>
+                            </div>
+                        </div>
+                    `;
+                $('#inputFields').append(newInputField);
+            });
+        });
+    </script>
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

@@ -4,6 +4,7 @@ using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RecipeLibrary.Application.Mappings;
 using RecipeLibrary.Domain.Entities;
 
 
@@ -12,7 +13,7 @@ namespace RecipeLibrary.Application.Services
     public class RecipeLibraryServices
     {
 
-        public static void Create(RecipeDetails recipeDetails, Ingredient ingredient)
+        public static void Create(RecipeDetailsDto recipeDetails)
         {
             if (recipeDetails.Name != null)
             {
@@ -29,7 +30,7 @@ namespace RecipeLibrary.Application.Services
                 if (client != null && !string.IsNullOrEmpty(authSecret) && !string.IsNullOrEmpty(basePath))
                 {
                     recipeDetails.EncodingName();
-                    recipeDetails.Ingredients.Add(new Ingredient { NameIng = ingredient.NameIng , Type = ingredient.Type , Value =  ingredient.Value});
+                   // recipeDetails.Ingredients.Add(new Ingredient { NameIng = ingredient.NameIng , Type = ingredient.Type , Value =  ingredient.Value});
 
                     client.Push("Recipes/", recipeDetails);
                 }

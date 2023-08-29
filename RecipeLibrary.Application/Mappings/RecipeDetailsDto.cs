@@ -1,22 +1,19 @@
-﻿using System;
+﻿using RecipeLibrary.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RecipeLibrary.Domain.Entities
+namespace RecipeLibrary.Application.Mappings
 {
-    public class RecipeDetails
+    public class RecipeDetailsDto
     {
-        [Required(ErrorMessage ="Name should be beetwen 3 and 20 letters.")]
-        [StringLength(20,MinimumLength = 2, ErrorMessage ="Name should be beetwen 3 and 20 letters.")]
         public string Name { get; set; } = default!;
-
-        [StringLength(50, MinimumLength = 10, ErrorMessage = "Description should be beetwen 10 and 50 letters.")]
         public string? DescriptionShort { get; set; }
         public string? DescriptionLong { get; set; }
-        public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>() { new Ingredient { NameIng = "", Value = 0, Type = "" } };
+        public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string EncodedName { get; set; } = default!;
 
