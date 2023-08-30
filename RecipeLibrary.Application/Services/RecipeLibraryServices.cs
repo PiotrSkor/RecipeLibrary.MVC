@@ -67,11 +67,11 @@ namespace RecipeLibrary.Application.Services
             return recipes;
         }
 
-        public static RecipeDetails GetByEncodedName(List<RecipeDetails> encodedName, string encodedNameFromDisplay)
+        public static RecipeDetails GetByEncodedName(List<RecipeDetails> encodedName, string encodedNameFromDisplay, string descriptionShort)
         {
             foreach (var item in encodedName)
             {
-                if (item.EncodedName == encodedNameFromDisplay)
+                if (item.EncodedName == encodedNameFromDisplay && item.DescriptionShort == descriptionShort)
                 {
 
                     return item;
@@ -81,21 +81,7 @@ namespace RecipeLibrary.Application.Services
             return null;
         }
 
-        public async static Task<RecipeDetails> Delete(string recipe)
-        {
-            var recipes = await RecipeLibraryServices.ReadDataFromFirebase();
-            foreach (var item in recipes)
-            {
-                if (recipe == item.EncodedName)
-                {
-                                  
-                }
-            }
-            return null;
-        
-        }
-
-        public static void DeleteRecipe(string encodedName)
+        public static void DeleteRecipe(string encodedName, string descriptionShort)
         {
             try
             {
@@ -112,7 +98,7 @@ namespace RecipeLibrary.Application.Services
                 var recipesReference = client.Get("Recipes/").ResultAs<Dictionary<string, RecipeDetailsDto>>();
 
                 // Znajdź klucz rekordu na podstawie encodedName
-                string keyToDelete = recipesReference.FirstOrDefault(pair => pair.Value.EncodedName == encodedName).Key;
+                string keyToDelete = recipesReference.FirstOrDefault(pair => pair.Value.EncodedName == encodedName && pair.Value.DescriptionShort == descriptionShort).Key;
 
                 if (!string.IsNullOrEmpty(keyToDelete))
                 {
@@ -132,19 +118,5 @@ namespace RecipeLibrary.Application.Services
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
         }
-
-        /*string path = "Recipes/";
-
-        // Delete the record
-        FirebaseResponse response = client.Delete(path);
-    }
-    catch (Exception ex)
-    {
-        // Handle exception
-        Console.WriteLine("An error occurred: " + ex.Message);
-    }*/
-    
-
-
     }
 }

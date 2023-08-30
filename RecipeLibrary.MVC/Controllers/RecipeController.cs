@@ -42,12 +42,12 @@ namespace RecipeLibrary.MVC.Controllers
 
     
         [HttpGet]
-        public async Task<IActionResult> Delete(string encodedName)
+        public async Task<IActionResult> Delete(string encodedName, string descriptionShort)
         {
             var x = await RecipeLibraryServices.ReadDataFromFirebase();
 
             
-            RecipeLibraryServices.DeleteRecipe(encodedName);
+            RecipeLibraryServices.DeleteRecipe(encodedName, descriptionShort);
             return RedirectToAction("Index");
         }
       
@@ -60,11 +60,11 @@ namespace RecipeLibrary.MVC.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Details(string encodedName)
+        public async Task<IActionResult> Details(string encodedName, string descriptionShort)
         {
             var x = await RecipeLibraryServices.ReadDataFromFirebase();
 
-            var details = RecipeLibraryServices.GetByEncodedName(x, encodedName);
+            var details = RecipeLibraryServices.GetByEncodedName(x, encodedName, descriptionShort);
 
 
             return View(details);

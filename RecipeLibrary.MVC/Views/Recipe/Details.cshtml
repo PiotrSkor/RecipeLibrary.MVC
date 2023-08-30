@@ -55,7 +55,6 @@
 }
 <div>
     <a class="btn btn-primary" asp-action="Index">Back to List</a>
-    <a class="btn btn-primary" asp-action="Edit">Edit</a>
-    <a class="btn btn-primary" href="/Recipe/Delete?encodedName=@Model.EncodedName" type="submit" value="Delete" onclick="return confirm('Are u sure?')">Delete</a>
+    <a class="btn btn-primary" href="/Recipe/Delete?encodedName=@Model.EncodedName&descriptionShort=@Model.DescriptionShort" type="submit" value="Delete" onclick="return confirm('Are u sure?')">Delete</a>
 </div>
 
