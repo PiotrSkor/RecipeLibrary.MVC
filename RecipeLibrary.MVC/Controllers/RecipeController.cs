@@ -23,22 +23,53 @@ namespace RecipeLibrary.MVC.Controllers
             return View(recipe);
         }
 
+        [HttpPost]
+        public IActionResult Edit(RecipeDetailsDto recipeDetails)
+        {
+            if (ModelState.IsValid)
+            {
+                return View(recipeDetails);
+            }
+            RecipeLibraryServices.Create(recipeDetails);
+            return RedirectToAction(nameof(Create));
+        }
+
+        [HttpGet]
+        public IActionResult Edit(RecipeDetails recipe)
+        {
+            return View(recipe);
+        }
+
+    
+        [HttpGet]
+        public async Task<IActionResult> Delete(string encodedName)
+        {
+            var x = await RecipeLibraryServices.ReadDataFromFirebase();
+
+            
+            RecipeLibraryServices.DeleteRecipe(encodedName);
+            return RedirectToAction("Index");
+        }
+      
+
         public async Task<IActionResult> Index()
         {
             var recipes = await RecipeLibraryServices.ReadDataFromFirebase();
             return View(recipes);
         }
 
+
+        [HttpGet]
         public async Task<IActionResult> Details(string encodedName)
         {
             var x = await RecipeLibraryServices.ReadDataFromFirebase();
 
             var details = RecipeLibraryServices.GetByEncodedName(x, encodedName);
 
-            
 
             return View(details);
         }
+       
 
       
     }

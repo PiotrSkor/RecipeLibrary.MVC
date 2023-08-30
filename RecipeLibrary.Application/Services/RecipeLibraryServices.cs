@@ -2,10 +2,12 @@
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
+using Google.Cloud.Firestore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RecipeLibrary.Application.Mappings;
 using RecipeLibrary.Domain.Entities;
+using System.Drawing;
 
 
 namespace RecipeLibrary.Application.Services
@@ -30,7 +32,6 @@ namespace RecipeLibrary.Application.Services
                 if (client != null && !string.IsNullOrEmpty(authSecret) && !string.IsNullOrEmpty(basePath))
                 {
                     recipeDetails.EncodingName();
-                   // recipeDetails.Ingredients.Add(new Ingredient { NameIng = ingredient.NameIng , Type = ingredient.Type , Value =  ingredient.Value});
 
                     client.Push("Recipes/", recipeDetails);
                 }
@@ -72,12 +73,78 @@ namespace RecipeLibrary.Application.Services
             {
                 if (item.EncodedName == encodedNameFromDisplay)
                 {
-                    
+
                     return item;
                 }
             }
 
             return null;
         }
+
+        public async static Task<RecipeDetails> Delete(string recipe)
+        {
+            var recipes = await RecipeLibraryServices.ReadDataFromFirebase();
+            foreach (var item in recipes)
+            {
+                if (recipe == item.EncodedName)
+                {
+                                  
+                }
+            }
+            return null;
+        
+        }
+
+        public static void DeleteRecipe(string encodedName)
+        {
+            try
+            {
+                string authSecret = "AgmJVhSXQ3hNPwu6Fti6QstWbKZeB4cLLxGIrQqK";
+                string basePath = "https://recipelibrary-d8e55-default-rtdb.europe-west1.firebasedatabase.app/";
+
+                IFirebaseConfig config = new FirebaseConfig
+                {
+                    AuthSecret = authSecret,
+                    BasePath = basePath
+                };
+                IFirebaseClient client = new FireSharp.FirebaseClient(config);
+
+                var recipesReference = client.Get("Recipes/").ResultAs<Dictionary<string, RecipeDetailsDto>>();
+
+                // Znajdź klucz rekordu na podstawie encodedName
+                string keyToDelete = recipesReference.FirstOrDefault(pair => pair.Value.EncodedName == encodedName).Key;
+
+                if (!string.IsNullOrEmpty(keyToDelete))
+                {
+                    string path = "Recipes/" + keyToDelete;
+
+                    // Usuń rekord
+                    FirebaseResponse response = client.Delete(path);
+                }
+                else
+                {
+                    Console.WriteLine("Record not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+        }
+
+        /*string path = "Recipes/";
+
+        // Delete the record
+        FirebaseResponse response = client.Delete(path);
+    }
+    catch (Exception ex)
+    {
+        // Handle exception
+        Console.WriteLine("An error occurred: " + ex.Message);
+    }*/
+    
+
+
     }
 }

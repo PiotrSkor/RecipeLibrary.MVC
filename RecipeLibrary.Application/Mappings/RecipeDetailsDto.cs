@@ -10,6 +10,7 @@ namespace RecipeLibrary.Application.Mappings
 {
     public class RecipeDetailsDto
     {
+
         public string Name { get; set; } = default!;
         public string? DescriptionShort { get; set; }
         public string? DescriptionLong { get; set; }
