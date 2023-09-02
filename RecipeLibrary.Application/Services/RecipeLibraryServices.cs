@@ -2,12 +2,10 @@
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
-using Google.Cloud.Firestore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RecipeLibrary.Application.Mappings;
 using RecipeLibrary.Domain.Entities;
-using System.Drawing;
 
 
 namespace RecipeLibrary.Application.Services
@@ -19,40 +17,20 @@ namespace RecipeLibrary.Application.Services
         {
             if (recipeDetails.Name != null)
             {
-                string authSecret = "AgmJVhSXQ3hNPwu6Fti6QstWbKZeB4cLLxGIrQqK"; //StringHelper.GetAppSettings(Constants.AppSetingTypes.Firebase, "AuthSecret");
-                string basePath = "https://recipelibrary-d8e55-default-rtdb.europe-west1.firebasedatabase.app/";//StringHelper.GetAppSetings(Constants.AppSetingTypes.Firebase, "BasePath");
+                var client = ConectToFirebase.ConectToFirebaseMethod();
+               
+                recipeDetails.EncodingName();
 
-                IFirebaseConfig config = new FirebaseConfig
-                {
-                    AuthSecret = authSecret,
-                    BasePath = basePath
-                };
-                IFirebaseClient client = new FirebaseClient(config);
-
-                if (client != null && !string.IsNullOrEmpty(authSecret) && !string.IsNullOrEmpty(basePath))
-                {
-                    recipeDetails.EncodingName();
-
-                    client.Push("Recipes/", recipeDetails);
-                }
+                client.Push("Recipes/", recipeDetails);
+                
             }
         }
 
 
         public static async Task<List<RecipeDetails>> ReadDataFromFirebase()
         {
-            string authSecret = "AgmJVhSXQ3hNPwu6Fti6QstWbKZeB4cLLxGIrQqK"; //StringHelper.GetAppSettings(Constants.AppSetingTypes.Firebase, "AuthSecret");
-            string basePath = "https://recipelibrary-d8e55-default-rtdb.europe-west1.firebasedatabase.app/";//StringHelper.GetAppSetings(Constants.AppSetingTypes.Firebase, "BasePath");
+            var client = ConectToFirebase.ConectToFirebaseMethod();
 
-            IFirebaseConfig config = new FirebaseConfig
-            {
-                AuthSecret = authSecret,
-                BasePath = basePath
-            };
-            IFirebaseClient client = new FireSharp.FirebaseClient(config);
-
-
-            client = new FireSharp.FirebaseClient(config);
             FirebaseResponse response = client.Get("Recipes/");
             dynamic data = JsonConvert.DeserializeObject<dynamic>(response.Body);
             var recipes = new List<RecipeDetails>();
@@ -85,15 +63,7 @@ namespace RecipeLibrary.Application.Services
         {
             try
             {
-                string authSecret = "AgmJVhSXQ3hNPwu6Fti6QstWbKZeB4cLLxGIrQqK";
-                string basePath = "https://recipelibrary-d8e55-default-rtdb.europe-west1.firebasedatabase.app/";
-
-                IFirebaseConfig config = new FirebaseConfig
-                {
-                    AuthSecret = authSecret,
-                    BasePath = basePath
-                };
-                IFirebaseClient client = new FireSharp.FirebaseClient(config);
+                var client = ConectToFirebase.ConectToFirebaseMethod();
 
                 var recipesReference = client.Get("Recipes/").ResultAs<Dictionary<string, RecipeDetailsDto>>();
 
