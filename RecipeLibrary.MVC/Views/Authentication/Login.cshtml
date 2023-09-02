@@ -1,0 +1,26 @@
+﻿@using RecipeLibrary.Domain.Entities
+@model User
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Strona logowania</title>
+</head>
+<body>
+    <h1>Strona logowania</h1>
+    <form method="post">
+        <div>
+            <label for="username">Nazwa użytkownika:</label>
+            <input type="text" id="username" name="username" required />
+        </div>
+        <div>
+            <label for="password">Hasło:</label>
+            <input type="password" id="password" name="password" required />
+        </div>
+        <div>
+            <button type="submit">Zaloguj się</button>
+        </div>
+    </form>
+</body>
+</html>
