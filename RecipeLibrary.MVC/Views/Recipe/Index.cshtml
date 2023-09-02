@@ -1,0 +1,33 @@
+﻿@model IEnumerable<RecipeLibrary.Domain.Entities.RecipeDetails>
+
+@{
+    ViewData["Title"] = "Recipes";
+}
+
+<h1 style="padding:20px; text-align:center">Recipes</h1>
+<hr/>
+<div style="text-align:right">
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+</div>
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="row mb-3" style="color:#D8E9A8; max-width: 20rem; padding:10px; margin-right: 10px">
+            <div class="card mb-3" style="background-color:#1E5128; border-color:#D8E9A8">
+                <div class="card-header" style="border-spacing: 5px; font-size:32px">@Html.DisplayFor(modelItem => item.Name)</div>
+                <div class="card-body ">
+                    <h6 class="card-subtitle" style="padding:10px">@Html.DisplayFor(modelItem => item.DescriptionShort) </h6>
+                    <hr />
+                    <br/>
+                    <div style="position: absolute; bottom: 0; right: 0; padding: 10px">
+                        <a href="/Recipe/Details?encodedName=@item.EncodedName&descriptionShort=@item.DescriptionShort" class="btn btn-success">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

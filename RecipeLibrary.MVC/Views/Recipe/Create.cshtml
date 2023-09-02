@@ -3,29 +3,47 @@
 
 <h1>Add recipe</h1>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col">
         <form action="/Recipe/Create" method="post">
             <div class="form-group mb-3">
-                <label class="control-label" asp-for="RecipeName">Recipe Name</label>
-                <input class="form-control" type="text" asp-for="RecipeName" placeholder="Pizza" />
-                <span asp-validation-for="RecipeName" class="text-danger"></span>
+                <label class="control-label" asp-for="Name">Recipe Name</label>
+                <input class="form-control" type="text" asp-for="Name" placeholder="Pizza" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label class="control-label" asp-for="RecipeDescriptionShort">Description</label>
-                <input class="form-control" type="text" asp-for="RecipeDescriptionShort" placeholder="Delicious pizza for whole family" />
-                <span asp-validation-for="RecipeDescriptionShort" class="text-danger"></span>
+                <label class="control-label" asp-for="DescriptionShort">Description</label>
+                <input class="form-control" type="text" asp-for="DescriptionShort" placeholder="Delicious pizza for whole family" />
+                <span asp-validation-for="DescriptionShort" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label class="control-label" asp-for="Ingredients">Ingredients</label>
-                <input class="form-control" type="text" asp-for="Ingredients" placeholder="Flour - 100g, Water - 200ml" />
+                <label class="control-label" asp-for="DescriptionLong">How to do it</label>
+                <input class="form-control" type="text" asp-for="DescriptionLong" placeholder="Flour and salt mix..." />
             </div>
-            <div class="form-group mb-3">
-                <label class="control-label" asp-for="IngredientsValue">Ingredients value</label>
-                <input class="form-control" type="text" asp-for="IngredientsValue" placeholder="Flour - 100g, Water - 200ml" />
-            </div>
-            <div class="form-group mb-3">
-                <label class="control-label" asp-for="RecipeDescriptionLong">How to do it</label>
-                <input class="form-control" type="text" asp-for="RecipeDescriptionLong" placeholder="Flour and salt mix..." />
+            <h3>INGREDIENTS</h3>
+            <span class="btn btn-success addIng">Add another ing</span>
+            <div id="inputFields">
+            @for (int i = 0; i < Model.Ingredients.Count; i++)
+            {
+                <div class="row" id="addButton">
+                    <div class="form-group mb-3 col-5" id="inputContainer">
+                        <label class="control-label" asp-for="@Model.Ingredients[i].NameIng">Name</label>
+                        <input class="form-control" type="text" asp-for="@Model.Ingredients[i].NameIng" placeholder="Flour" />
+                    </div>
+                    <div class="form-group mb-3 col-3" id="inputContainer">
+                        <label class="control-label" asp-for="@Model.Ingredients[i].Value">Value</label>
+                        <input class="form-control" type="text" asp-for="@Model.Ingredients[i].Value" placeholder="Flour" />
+                    </div>
+                    <div class="form-group col-2">
+                        <select class="form-select mt-4" id="exampleSelect1" asp-for="@Model.Ingredients[i].Type">
+                            <option>Gram</option>
+                            <option>Kg</option>
+                            <option>liter</option>
+                            <option>Spoon</option>
+                            <option>Pinch</option>
+                        </select>
+                    </div>
+                </div>
+            }
             </div>
             <div class="form-group mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -34,7 +52,39 @@
     </div>
 </div>
 
+
 @section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.addIng').click(function () {
+                var inputCount = $('#inputFields').children().length;
+                var newInputField = `
+                        <div class="row" id="addButton">
+                            <div class="form-group mb-3 col-5" id="inputContainer">
+                                <label class="control-label" asp-for="Ingredients[${inputCount}].NameIng">Name</label>
+                                <input class="form-control" type="text" asp-for="Ingredients[${inputCount}].NameIng" placeholder="Flour" />
+                            </div>
+                            <div class="form-group mb-3 col-3" id="inputContainer">
+                                <label class="control-label" asp-for="Ingredients[${inputCount}].Value">Value</label>
+                                <input class="form-control" type="text" asp-for="Ingredients[${inputCount}].Value" placeholder="Flour" />
+                            </div>
+                            <div class="form-group col-2">
+                                <select class="form-select mt-4" id="exampleSelect1" asp-for="Ingredients[${inputCount}].Type">
+                                    <option>Gram</option>
+                                    <option>Kg</option>
+                                    <option>liter</option>
+                                    <option>Spoon</option>
+                                    <option>Pinch</option>
+                                </select>
+                            </div>
+                        </div>
+                    `;
+                $('#inputFields').append(newInputField);
+            });
+        });
+    </script>
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
